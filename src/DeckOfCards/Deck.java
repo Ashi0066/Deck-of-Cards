@@ -1,3 +1,5 @@
+package DeckOfCards;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -5,7 +7,12 @@ import java.util.Random;
 public class Deck
 {
 
-    ArrayList<Card> cardArrayList;
+
+    public static Deck intsance;
+
+
+
+   public ArrayList<Card> cardArrayList;
 
     public Deck(){
         cardArrayList= new ArrayList<>();
@@ -13,10 +20,16 @@ public class Deck
 
     }
 
+    public static Deck getInstance(){
+        if (intsance==null){
+            intsance = new Deck();
+        }
+        return intsance;
+    }
 
 
     public void intializeDeck(){
-        for (Suit suit:Suit.values()){
+        for (Suit suit: Suit.values()){
             for (int i =2 ; i<=14;i++){
 
                 if (i>=11){
@@ -42,6 +55,24 @@ public class Deck
 
             default -> throw new IllegalStateException("Unexpected value: " + number);
         };
+    }
+
+    public void deckPrinter(){
+        System.out.println("-".repeat(40));
+
+        for(int i = 0 ; i<cardArrayList.size();i++){
+
+            Card card= cardArrayList.get(i);
+            if (i%13==0){
+                System.out.println();
+                System.out.println(card.suit());
+            }
+            System.out.print(cardArrayList.get(i));
+
+        }
+        System.out.println();
+
+
     }
 
 
@@ -81,18 +112,16 @@ public class Deck
 
     }
 
-    public void getRandomCard(){
+    public Card getRandomCard(){
 
 
         Random random = new Random();
-        System.out.println("-----".repeat(20));
         Card card= cardArrayList.get(random.nextInt(2,36));
+        return card;
+    }
 
-        System.out.println("Randomly selected card "+ card.suit() + " " + card.rank());
-
-
-
-        System.out.println(card);
+    public void shuffle(){
+        Collections.shuffle(cardArrayList);
     }
 
 
